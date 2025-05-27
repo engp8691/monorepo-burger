@@ -1,11 +1,27 @@
-import { GetStaticProps, GetStaticPaths } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
+
+interface Post {
+  id: number
+  title: string
+  body: string
+}
 
 interface BlogPostProps {
-  post: { id: number; title: string; body: string }
+  post?: Post
 }
 
 export default function BlogPost({ post }: BlogPostProps) {
-  console.log(888888, 'the blog post json was there at build time')
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <p>Loading post...</p>
+  }
+
+  if (!post) {
+    return <p>Post not found.</p>
+  }
+
   return (
     <div>
       <h1>{post.title}</h1>
@@ -15,33 +31,49 @@ export default function BlogPost({ post }: BlogPostProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Fetch a list of blog post IDs from an API
-  const posts = await fetch('https://jsonplaceholder.typicode.com/posts').then((res) => res.json())
-  // console.log(99919, posts)
+  // Fetch only first 3 posts for build-time generation
+  const posts: Post[] = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=3').then(res => res.json())
 
-  // Create paths for each post
-  const paths = posts.map((post: { id: number }) => ({
+  const paths = posts.map(post => ({
     params: { slug: post.id.toString() },
   }))
 
   return {
     paths,
-    fallback: false, // Show 404 page if path is not found
+    // fallback: false
+    fallback: true, // fallback enabled
+    // fallback: 'blocking'
+
+    // fallback	Initial behavior for missing paths	SEO Friendly?	UX	Caching
+    // false	404 page	✅	Fast, no loading screen	Static
+    // true	Show loading fallback, then fetch & render	❌ (loading fallback)	Loading screen on first visit	Cached after first visit
+    // 'blocking'	Wait server-side, then send full page	✅	Wait longer on first load, no loading screen	Cached after first visit
   }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  console.log(99934, params)
+  const slug = params?.slug as string
 
-  const { slug } = params!
-  const post = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`).then((res) =>
-    res.json()
-  )
+  try {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`)
+    
+    if (!res.ok) {
+      return { notFound: true }
+    }
 
-  return {
-    props: {
-      post,
-      fallback: true
-    },
+    const post: Post = await res.json()
+
+    if (!post?.id) {
+      return { notFound: true }
+    }
+
+    return {
+      props: {
+        post,
+      },
+      revalidate: 30,
+    }
+  } catch (error) {
+    return { notFound: true }
   }
 }

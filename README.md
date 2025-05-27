@@ -80,3 +80,44 @@ And join the Nx community:
 - [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
 - [Our Youtube channel](https://www.youtube.com/@nxdevtools)
 - [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+
+
+npx create-nx-workspace@latest monorepo-burger --preset=next
+
+
+ NX   Let's create a new workspace [https://nx.dev/getting-started/intro]
+
+✔ Application name · frontend
+✔ Would you like to use the App Router (recommended)? · Yes
+✔ Would you like to use the src/ directory? · Yes
+✔ Which unit test runner would you like to use? · none
+✔ Test runner to use for end to end (E2E) tests · playwright
+✔ Default stylesheet format · css
+✔ Would you like to use ESLint? · Yes
+✔ Would you like to use Prettier for code formatting? · Yes
+✔ Which CI provider would you like to use? · github
+
+
+npm install -D vitest @vitest/ui @testing-library/react @testing-library/jest-dom jsdom\n
+ 1944  npm install -D @vitejs/plugin-react @vitest/coverage-v8
+ 1945  npx nx run frontend:test
+ 1946  npm install -D @nx/vite\n
+ 1947  npx nx run frontend:test
+ 1948  npx nx test frontend
+ 1949  npx vitest --config apps/frontend/vitest.config.ts
+ 1950  npx vitest --config apps/frontend/vite.config.ts
+ 1951  npx nx test frontend
+ 1952  npx nx frontend:serve
+ 1953  npx nx frontend:dev
+ 1954  npx nx serve frontend\nnpx nx storybook frontend\nnpx nx test frontend
+ 1955  npx nx serve frontend
+ 1956  npx nx dev frontend
+ 1957  npx nx preview frontend
+ 1958  npx nx serve-static frontend
+ 1959  npx nx g @nx/react:storybook-configuration frontend
+ 1960  npx nx dev frontend
+ 1961  npx nx storybook frontend
+ 1962  npx nx test frontend
+ 1963  git add .
+ 1964  git commit -a -m "feat: add storybook and vite for test"
