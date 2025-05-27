@@ -16,7 +16,7 @@ export default function About() {
 
   return (
     <div ref={divRef}>
-      <h1>About Page</h1>
+      <h1>About Page. It is client rendering as React</h1>
       <p>Open dev tools and look at the console to see route changes.</p>
       <Link href="/">Back to Home</Link>
     </div>
