@@ -7,7 +7,6 @@ import Link from 'next/link'
 export default function About() {
   const pathname = usePathname()
   const divRef = useRef<HTMLDivElement>(null)
-  console.log(9999100, pathname, divRef, divRef.current)
 
   useEffect(() => {
     console.log('Navigated to:', pathname)
