@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import jwt from 'jsonwebtoken'
+
+const secret = 'secret';
 
 export async function POST(request: NextRequest) {
   const { username, password } = await request.json();
@@ -8,7 +11,9 @@ export async function POST(request: NextRequest) {
     const response = NextResponse.json({ success: true });
     response.cookies.set({
       name: 'token',
-      value: 'your-jwt-or-session-token',
+      value: jwt.sign({ username }, secret, {
+        expiresIn: '1h', // token valid for 1 hour
+      }),
       httpOnly: true,
       path: '/',
       secure: process.env.NODE_ENV === 'production',

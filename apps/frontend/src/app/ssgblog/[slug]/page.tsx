@@ -1,9 +1,21 @@
-// app/blog/[slug]/page.tsx
+// import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 
+export const dynamicParams = false // Generate 404 if param is not in generateStaticParams
+export const revalidate = 50
+
 type BlogPostProps = {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }
+
+// The simple version
+// export async function generateStaticParams() {
+//   return [{ slug: 'post-1' }, { slug: 'post-2' }];
+// }
+// export default async function BlogPost({ params }: BlogPostProps) {
+//   const { slug } = params
+//   return <div>Blog Post: {slug}</div>;
+// }
 
 export async function generateStaticParams() {
   const res = await fetch('https://jsonplaceholder.typicode.com/posts')

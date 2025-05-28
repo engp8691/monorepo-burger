@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
 export default async function BlogPost({ params }: { params: { slug: string } }) {
     const { slug } = await params
@@ -14,8 +14,12 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
     const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`, {
         headers: { Authorization: `Bearer ${token}` },
-        cache: 'no-store'
+        cache: 'no-store' // Force dynamic
     })
+
+    if (!res.ok) {
+        notFound()
+    }
 
     const post = await res.json()
     return <div>{post.title}</div>
