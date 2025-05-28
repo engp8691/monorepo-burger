@@ -1,8 +1,11 @@
 import { FC } from "react"
 
-type Greating = {
-    name: string
+type Greeting = {
+  name: string
 }
-export const Secret: FC<Greating> = ({name})=>{
-    return <div>`Hello ${name}!`</div>
+
+const Secret: FC<Greeting> = ({ name }) => {
+  return <div>{`Hello ${name}!`}</div>
 }
+
+export default Secret

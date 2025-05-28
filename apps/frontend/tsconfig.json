@@ -26,15 +26,15 @@
     },
     "outDir": "dist",
     "rootDir": "src",
-    "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
+    "skipLibCheck": true
   },
   "include": [
     "next-env.d.ts",
-    "src",
-    ".next/types/**/*.ts"
+    "src"
   ],
   "exclude": [
     "dist",
+    "../../dist",
     "node_modules",
     ".next",
     "**/*.spec.ts",
