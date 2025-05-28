@@ -30,12 +30,7 @@
   },
   "include": [
     "next-env.d.ts",
-<<<<<<< HEAD
-    "src",
-    ".next/types/**/*.ts"
-=======
     "src"
->>>>>>> 00ddd176342f61b4ab406c373a5ad19416828fa7
   ],
   "exclude": [
     "dist",
