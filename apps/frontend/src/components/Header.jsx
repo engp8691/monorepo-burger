@@ -8,6 +8,7 @@ const Header = () => {
       <Link className="p-2 text-blue-600 hover:underline" href="/about">About</Link>
       <Link className="p-2 text-blue-600 hover:underline" href="/marketing">Marketing</Link>
       <Link className="p-2 text-blue-600 hover:underline" href="/ssgblog/1">SSG Blog</Link>
+      <Link className="p-2 text-blue-600 hover:underline" href="/secret">Secret</Link>
       <Link className="p-2 text-blue-600 hover:underline" href="/ssrblog/6">SSR Blog</Link>
       <Link className="p-2 text-blue-600 hover:underline" href="/login">Login</Link>
     </nav>

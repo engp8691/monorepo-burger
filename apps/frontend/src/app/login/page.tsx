@@ -58,15 +58,29 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 cursor-pointer"
-                    onClick={(event) => {
+                    onClick={async (event) => {
                       event.preventDefault()
-                      if (passwordRef.current && usernameRef.current) {
-                        setUser({
-                          username: usernameRef.current.value,
-                          password: passwordRef.current.value
-                        })
+
+                      const res = await fetch('/api/login', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                          username: usernameRef.current?.value,
+                          password: passwordRef.current?.value,
+                        }),
+                        headers: { 'Content-Type': 'application/json' },
+                      })
+
+                      if (res.ok) {
+                        if (passwordRef.current && usernameRef.current) {
+                          setUser({
+                            username: usernameRef.current.value,
+                            password: passwordRef.current.value
+                          })
+                        }
+                        router.push('/')
+                      } else {
+                        alert('Login failed')
                       }
-                      router.push('/')
                     }}
                   >
                     Sign In
